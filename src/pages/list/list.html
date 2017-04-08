@@ -1,23 +1,37 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color='black'>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="menu" color='title'></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title color='title'>List</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
+  <ion-list class="masters">
+    <div ng-controller="SearchCtrl">
+      <label class="item item-input">
+         <i class="icon ion-search placeholder-icon"></i>
+         <input (keyup)="onKey($event,'cosa')">
+      </label>
+    </div>
+    <button ion-item *ngFor="let comic of comics" (click)="itemTapped($event, comic)" class="masters">
+        <ion-card class="masters">
+          <img src={{comic.thumbnail.path}}.{{comic.thumbnail.extension}} />
+          <ion-card-content>
+            <ion-card-title text-wrap color='title'>
+              {{comic.title}}
+            </ion-card-title>
+            <p text-wrap secondary>
+              {{comic.description}}
+            </p>
+          </ion-card-content>
+        </ion-card>
     </button>
   </ion-list>
+<!--  <b>{{searchValue}}</b>
+  <b>{{searchValue2}}</b>
   <div *ngIf="selectedItem" padding>
     You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+  </div>-->
 </ion-content>
