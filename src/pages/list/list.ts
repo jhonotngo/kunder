@@ -33,10 +33,11 @@ export class ListPage {
     if (this.myDate!= '' && this.myDate2!='')
       parameters = parameters + '&dateRange='+this.myDate+','+this.myDate2;
 
+
     parameters = parameters+'&orderBy=title&limit=20&apikey='+ENV.PUBLIC_API_KEY+'&hash='+Md5.hashStr('1'+ENV.PRIVATE_API_KEY+ENV.PUBLIC_API_KEY)+'&ts=1'
-    this.getComics.loadData(parameters)
+    this.getComics.loadData(parameters,this.searchValue)
       .then(data => {
-        this.comics = data.data.results;
+        this.comics = (this.searchValue== data[1])? data[0].data.results:this.comics;
       });
   }
 
@@ -48,24 +49,19 @@ export class ListPage {
   }
 
   changeDate(event: any,type) { // without type info
-    if (this.myDate == '' || this.myDate2 == '')
-    {
-      if (this.myDate2 == '' && this.myDate != '')
-        this.myDate2 = new Date().toISOString();
-
-      if (this.myDate == '' && this.myDate2 != '')
-        this.myDate = this.myDate2;
-    } else
-    {
-      if (new Date(this.myDate2.toString()).getTime() < new Date(this.myDate.toString()).getTime() && type=='max' ){
-        this.myDate = this.myDate2;
-      }
-      if (new Date(this.myDate2.toString()).getTime() < new Date(this.myDate.toString()).getTime() && type=='min' ){
-        this.myDate2 = this.myDate;
-      }
-
+    if (new Date(this.myDate2.toString()).getTime() < new Date(this.myDate.toString()).getTime() && type=='max' ){
+      this.myDate = this.myDate2;
     }
+    if (new Date(this.myDate2.toString()).getTime() < new Date(this.myDate.toString()).getTime() && type=='min' ){
+      this.myDate2 = this.myDate;
+    }
+
     this.loadComics(1);
   }
+
+  formatDate(date){
+          var dateOut = new Date(date);
+          return dateOut;
+    };
 
 }

@@ -17,15 +17,16 @@
   <h5 align="center">Buscar por fecha de publicación</h5>
   <ion-card>
     <div class="item row">
-      <ion-card align="right" class="col col-50 space">
+      <ion-card class="col col-25">
         <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="myDate" (ionChange)="changeDate($event,'min')" placeholder="Desde" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
       </ion-card>
-      <ion-card align="right" class="col col-50 space">
+      <ion-card class="col col-25">
         <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="myDate2" (ionChange)="changeDate($event,'max')" placeholder="Hasta" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
       </ion-card>
     </div>
   </ion-card>
   <ion-list >
+    <h5 align="center" *ngIf="comics?.length == 0" style="color:#af0a0a">No se han encontrado comics con los parametros ingresados.</h5>
     <button ion-item *ngFor="let comic of comics" (click)="itemTapped($event, comic)">
       <ion-card>
         <img src={{comic.thumbnail.path}}.{{comic.thumbnail.extension}} />
@@ -33,9 +34,14 @@
           <ion-card-title text-wrap color='title'>
             {{comic.title}}
           </ion-card-title>
+          <p text-wrap primary>
+            <b style="color:white">Fecha de lanzamiento:</b> {{comic.dates[0].date | date:'dd/MM/yyyy'}}
+          </p>
           <p text-wrap secondary>
             {{comic.description}}
           </p>
+
+
         </ion-card-content>
       </ion-card>
     </button>

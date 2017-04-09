@@ -12,9 +12,36 @@
         <ion-card-title text-wrap color='title'>
           {{comic.title}}
         </ion-card-title>
+        <p text-wrap primary>
+          <b style="color:white">Fecha de lanzamiento:</b> {{comic.dates[0].date | date:'dd/MM/yyyy'}}
+        </p>
+        <p text-wrap primary>
+          <b style="color:white">Serie:</b> {{comic.series.name}}
+        </p>
+        <p text-wrap primary>
+          <b style="color:white">Precio del comic: $</b> {{comic.prices[0].price}}
+        </p>
+        <p text-wrap primary>
+          <b style="color:white">Precio del comic digital: $</b> {{comic.prices[1].price}}
+        </p>
+        <p text-wrap>
+          <b style="color:white">Variantes:</b> {{comic.variants?.length}}
+        </p>
+        <p text-wrap>
+          <b style="color:white">Personajes:</b>
+          <b *ngIf="comic.characters.items?.length == 0" style="color:white">No hay información de sus personajes.</b>
+        </p>
+        <ul *ngFor="let character of comic.characters.items">
+          <li style="color:white">
+            {{character.name}}
+          </li>
+        </ul>
+        <br>
         <p text-wrap>
           {{comic.description}}
         </p>
+        <a href={{comic.urls[0].url}} target="_blank">Ver en pagina web</a>
+        <a href="https://read.marvel.com/#/book/{{comic.digitalId}}" target="_blank">Leer en linea</a>
       </ion-card-content>
     </ion-card>
   </ion-list>

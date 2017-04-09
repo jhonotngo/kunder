@@ -15,7 +15,7 @@ export class GetComics {
   constructor(public http: Http) {
   }
 
-  loadData(parameters){
+  loadData(parameters,textSearch=''){
     if (this.data && parameters==null) {
       // already loaded data
       return Promise.resolve(this.data);
@@ -28,7 +28,7 @@ export class GetComics {
           // we've got back the raw data, now generate the core schedule data
           // and save the data for later reference
           this.data = data;
-          resolve(this.data);
+          resolve([this.data,textSearch]);
         });
     });
   }
