@@ -1,32 +1,43 @@
 <ion-header>
-  <ion-navbar color='black'>
+  <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu" color='title'></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title color='title'>List</ion-title>
+    <ion-title align="center">Marvel Api test - Kunder</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list class="masters">
-    <div ng-controller="SearchCtrl">
-      <label class="item item-input">
-         <i class="icon ion-search placeholder-icon"></i>
-         <input (keyup)="onKey($event,'cosa')">
-      </label>
+  <ion-searchbar
+    [(ngModel)]="searchValue"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="loadComics($event)"
+    placeholder="Título">
+  </ion-searchbar>
+  <h5 align="center">Buscar por fecha de publicación</h5>
+  <ion-card>
+    <div class="item row">
+      <ion-card align="right" class="col col-50 space">
+        <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="myDate" (ionChange)="changeDate($event,'min')" placeholder="Desde" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
+      </ion-card>
+      <ion-card align="right" class="col col-50 space">
+        <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="myDate2" (ionChange)="changeDate($event,'max')" placeholder="Hasta" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
+      </ion-card>
     </div>
-    <button ion-item *ngFor="let comic of comics" (click)="itemTapped($event, comic)" class="masters">
-        <ion-card class="masters">
-          <img src={{comic.thumbnail.path}}.{{comic.thumbnail.extension}} />
-          <ion-card-content>
-            <ion-card-title text-wrap color='title'>
-              {{comic.title}}
-            </ion-card-title>
-            <p text-wrap secondary>
-              {{comic.description}}
-            </p>
-          </ion-card-content>
-        </ion-card>
+  </ion-card>
+  <ion-list >
+    <button ion-item *ngFor="let comic of comics" (click)="itemTapped($event, comic)">
+      <ion-card>
+        <img src={{comic.thumbnail.path}}.{{comic.thumbnail.extension}} />
+        <ion-card-content>
+          <ion-card-title text-wrap color='title'>
+            {{comic.title}}
+          </ion-card-title>
+          <p text-wrap secondary>
+            {{comic.description}}
+          </p>
+        </ion-card-content>
+      </ion-card>
     </button>
   </ion-list>
 <!--  <b>{{searchValue}}</b>

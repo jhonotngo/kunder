@@ -13,11 +13,9 @@ import 'rxjs/add/operator/map';
 export class GetComics {
   data: any;
   constructor(public http: Http) {
-    console.log('Hello GetComics Provider');
   }
 
   loadData(parameters){
-    console.log(1232);
     if (this.data && parameters==null) {
       // already loaded data
       return Promise.resolve(this.data);

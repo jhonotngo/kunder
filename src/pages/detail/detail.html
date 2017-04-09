@@ -1,21 +1,18 @@
 <ion-header>
   <ion-navbar color='black'>
-    <button ion-button menuToggle color='title'>
-      <ion-icon name="menu" color='title'></ion-icon>
-    </button>
-    <ion-title color='title'>List</ion-title>
+    <ion-title color='title'>{{comic.title}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list class="masters">
-    <ion-card class="masters">
+  <ion-list>
+    <ion-card>
       <img src={{comic.thumbnail.path}}.{{comic.thumbnail.extension}} />
       <ion-card-content>
         <ion-card-title text-wrap color='title'>
           {{comic.title}}
         </ion-card-title>
-        <p text-wrap secondary>
+        <p text-wrap>
           {{comic.description}}
         </p>
       </ion-card-content>

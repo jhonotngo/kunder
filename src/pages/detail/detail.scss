@@ -1,3 +1,23 @@
 page-detail {
 
 }
+.toolbar-md-black .bar-button-clear-md,
+.toolbar-md-black .bar-button-default-md,
+.toolbar-md-black .bar-button-outline-md,
+.toolbar-md-black .toolbar-title-md,
+.toolbar-wp-black .bar-button-clear-wp,
+.toolbar-wp-black .bar-button-default-wp,
+.toolbar-wp-black .bar-button-outline-wp,
+.toolbar-wp-black .toolbar-title-wp,
+.toolbar-ios-black .bar-button-clear-ios,
+.toolbar-ios-black .bar-button-default-ios,
+.toolbar-ios-black .bar-button-outline-ios,
+.toolbar-ios-black .toolbar-title-ios{
+  color: red;
+}
+
+.card-ios p,
+.card-wp p,
+.card-md p{
+  color: white;
+}

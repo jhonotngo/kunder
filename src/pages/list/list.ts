@@ -17,15 +17,25 @@ export class ListPage {
   searchValue: string;
   searchValue2: string;
   public comics: any;
+  myDate: String = '';
+  myDate2: String = '';
   constructor(public navCtrl: NavController, public navParams: NavParams, public getComics: GetComics,public http: Http) {
-    this.loadComics(20);
+    this.loadComics(1);
+    this.myDate = '';
+    this.myDate2 = '';
+    this.searchValue = ''
   }
-//
-  loadComics(number) {
-    console.log(number)
-    this.getComics.loadData('&noVariants=true&dateDescriptor=thisMonth&orderBy=title&limit='+number+'&apikey='+ENV.PUBLIC_API_KEY+'&hash='+Md5.hashStr('1'+ENV.PRIVATE_API_KEY+ENV.PUBLIC_API_KEY)+'&ts=1')
+
+  loadComics(event) {
+    var parameters = '';
+    if (!((this.searchValue === undefined) || (this.searchValue === '')))
+      parameters = parameters + '&titleStartsWith='+this.searchValue;
+    if (this.myDate!= '' && this.myDate2!='')
+      parameters = parameters + '&dateRange='+this.myDate+','+this.myDate2;
+
+    parameters = parameters+'&orderBy=title&limit=20&apikey='+ENV.PUBLIC_API_KEY+'&hash='+Md5.hashStr('1'+ENV.PRIVATE_API_KEY+ENV.PUBLIC_API_KEY)+'&ts=1'
+    this.getComics.loadData(parameters)
       .then(data => {
-        console.log(data.data.results);
         this.comics = data.data.results;
       });
   }
@@ -37,13 +47,25 @@ export class ListPage {
     });
   }
 
-  onKey(event: any,type) { // without type info
+  changeDate(event: any,type) { // without type info
+    if (this.myDate == '' || this.myDate2 == '')
+    {
+      if (this.myDate2 == '' && this.myDate != '')
+        this.myDate2 = new Date().toISOString();
 
-    if (type == 'cosa'){
-      this.loadComics(Math.floor(Math.random() * 20)+1);
-      this.searchValue = event.target.value + ' ' + type + ' ' + ENV.PUBLIC_API_KEY;
-    } else if (type == 'cosito')
-      this.searchValue2 = event.target.value + ' ' + type;
+      if (this.myDate == '' && this.myDate2 != '')
+        this.myDate = this.myDate2;
+    } else
+    {
+      if (new Date(this.myDate2.toString()).getTime() < new Date(this.myDate.toString()).getTime() && type=='max' ){
+        this.myDate = this.myDate2;
+      }
+      if (new Date(this.myDate2.toString()).getTime() < new Date(this.myDate.toString()).getTime() && type=='min' ){
+        this.myDate2 = this.myDate;
+      }
 
+    }
+    this.loadComics(1);
   }
+
 }
